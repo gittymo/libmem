@@ -127,3 +127,18 @@ void _MEMMAN_EXIT()
 		_MEMMAN_ = NULL;
 	}
 }
+
+int32_t MEMMAN_SIZE(void * data_ptr)
+{
+	int32_t size_in_bytes = 0;
+	if (_MEMMAN_ == NULL) _MEMMAN_INIT();
+	if (_MEMMAN_ != NULL && data_ptr != NULL) {
+		for (int32_t i = 0; i < _MEMMAN_->record_count; i++) {
+			if (_MEMMAN_->record_ids[i] == data_ptr && _MEMMAN_->records[i]->_manager == _MEMMAN_) {
+				size_in_bytes = _MEMMAN_->records[i]->data_length;
+				break;
+			}
+		}
+	}
+	return size_in_bytes;
+}

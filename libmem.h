@@ -32,7 +32,14 @@ void * MEMMAN_ALLOC(int32_t size_in_bytes);
 /* MEMMAN_REALLOC is used to resize a previously allocated block of memory allocated by MEMMAN_ALLOC.
 	 The method returns a pointer to the start of the newly sized memory area, which may not be the same as the original. */
 void * MEMMAN_REALLOC(void * data_ptr, int32_t new_size_in_bytes);
+
+/*	MEMMAN_FREE is used to free dynamic memory allocated by MEMMAN.  The start of the memory must be provided by data_ptr.
+		The method returns an unsigned integer given the number of bytes freed. */
 int32_t MEMMAN_FREE(void * data_ptr);
+
+/*	MEMMAN_SIZE is used to determine the size of an area of memory allocated by MEMMAN.  data_ptr must point to the start of the memory.
+		The method returns an unsigned integer giving the size of the memory area in bytes. */
+int32_t MEMMAN_SIZE(void * data_ptr);
 
 /*	PRIVATE METHODS */
 void _MEMMAN_INIT();
