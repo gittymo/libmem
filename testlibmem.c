@@ -14,6 +14,7 @@ int main(int argc, char * argv[])
 		strcpy(mem, test_text);
 		printf("Copied the string '%s' as '%s'.\n", test_text, mem);
 	}
+	getchar();
 	// It is IMPERITIVE that exit is called to exit the main method, otherwise the MEMMAN cleaner will not run and memory won't be freed.
 	exit(EXIT_SUCCESS);
 }

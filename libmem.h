@@ -5,6 +5,7 @@
 
 #include <inttypes.h>
 #include <stdlib.h>
+#include "libmemerrors.h"
 
 #define _MEMMAN_RECORD_CAPACITY_INC 64
 

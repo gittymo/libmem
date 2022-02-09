@@ -27,11 +27,12 @@ void _MEMMAN_INIT()
 			_MEMMAN_->current_record_capacity = 0;
 			free(_MEMMAN_);
 			_MEMMAN_ = NULL;
+			LIBMEM_ERRNO = LIBMEM_ERROR_NO_MEMORY;
 		}
 		if (_MEMMAN_ != NULL) {
 			atexit(&_MEMMAN_EXIT);
 		}
-	}
+	} else LIBMEM_ERRNO = LIBMEM_ERROR_NO_MEMORY;
 }
 
 void * MEMMAN_ALLOC(int32_t size_in_bytes)
@@ -57,13 +58,16 @@ void * MEMMAN_ALLOC(int32_t size_in_bytes)
 						if (newRecsPtr != NULL) {
 							_MEMMAN_->record_ids = newRecIdsPtr;
 							_MEMMAN_->records = newRecsPtr;
-						} else {
-							_MEMMAN_->current_record_capacity -= _MEMMAN_RECORD_CAPACITY_INC;
-						}
-					}
+						} else LIBMEM_ERRNO = LIBMEM_ERROR_NO_MEMORY;
+					} else LIBMEM_ERRNO = LIBMEM_ERROR_NO_MEMORY;
+					if (LIBMEM_ERRNO == LIBMEM_ERROR_NO_MEMORY) _MEMMAN_->current_record_capacity -= _MEMMAN_RECORD_CAPACITY_INC;
 				}
+			} else {
+				free(m);
+				m = NULL;
+				LIBMEM_ERRNO = LIBMEM_ERROR_NO_MEMORY;
 			}
-		}
+		} else LIBMEM_ERRNO = LIBMEM_ERROR_NO_MEMORY;
 	}
 	return m;
 }
@@ -81,7 +85,7 @@ void * MEMMAN_REALLOC(void * data_ptr, int32_t new_size_in_bytes)
 					_MEMMAN_->records[i]->data_length = new_size_in_bytes; 
 				} else m = data_ptr;
 				break;
-			}
+			} else LIBMEM_ERRNO = LIBMEM_ERROR_NO_MEMORY;
 		}
 	}
 	return m;
