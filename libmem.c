@@ -4,8 +4,11 @@
 
 #include "libmem.h"
 
+int32_t LIBMEM_ERRNO = LIBMEM_ERROR_NONE;
+
 void _MEMMAN_INIT()
 {
+	LIBMEM_ERRNO = LIBMEM_ERROR_NONE;
 	_MEMMAN_ = (MEMMAN *) malloc(sizeof(MEMMAN));
 	if (_MEMMAN_ != NULL) {
 		_MEMMAN_->record_count = 0;
@@ -37,6 +40,7 @@ void _MEMMAN_INIT()
 
 void * MEMMAN_ALLOC(int32_t size_in_bytes)
 {
+	LIBMEM_ERRNO = LIBMEM_ERROR_NONE;
 	void * m = NULL;
 	if (_MEMMAN_ == NULL) _MEMMAN_INIT();
 	if (_MEMMAN_ != NULL && _MEMMAN_->record_count < _MEMMAN_->current_record_capacity && size_in_bytes > 0) {
@@ -74,6 +78,7 @@ void * MEMMAN_ALLOC(int32_t size_in_bytes)
 
 void * MEMMAN_REALLOC(void * data_ptr, int32_t new_size_in_bytes)
 {
+	LIBMEM_ERRNO = LIBMEM_ERROR_NONE;
 	void * m = NULL;
 	if (_MEMMAN_ == NULL) _MEMMAN_INIT();
 	if (_MEMMAN_ != NULL && data_ptr != NULL && new_size_in_bytes > 0) {

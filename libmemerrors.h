@@ -10,6 +10,6 @@
 #define LIBMEM_ERROR_NONE 0
 #define LIBMEM_ERROR_NO_MEMORY 1
 
-static int32_t LIBMEM_ERRNO = LIBMEM_ERROR_NONE;
+extern int32_t LIBMEM_ERRNO;
 
 #endif
